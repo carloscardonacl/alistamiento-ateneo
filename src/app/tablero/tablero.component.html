@@ -1,0 +1,71 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class=" project-task">
+                <div class="card widget-statstic-card borderless-card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <h5>Fase I</h5>
+                            <p class="p-t-10 m-b-0 text-muted">Remisiones</p>
+                            <i class="fa fa-barcode st-icon bg-warning"></i>
+                        </div>
+                        <div class="card-header-right">
+                            <div style="width:120px;margin-right:80px;float:right;">
+                                <input class="form-control" [(ngModel)]="filtro_Destino1" (change)="filtrosFase1()" placeholder="Destino" />
+                            </div>
+                            <div style="width:120px;margin-right:10px;float:right;">
+                                <input class="form-control" [(ngModel)]="filtro_Origen1" (change)="filtrosFase1()" placeholder="Filtro Origen" />
+                            </div>
+                            <div style="width:120px;margin-right:10px;float:right;">
+                                <input class="form-control" [(ngModel)]="filtro_Codigo1" (change)="filtrosFase1()" placeholder="Filtro Código" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block p-b-10 " style="overflow:auto; height: 400px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center" *ngIf="FaseI.length==0&&!ValidaFase1">
+                                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                                    <h4>Cargando Remisiones por Alistamiento Fase 1</h4>
+                                </div>
+                                <div class="text-center" *ngIf="FaseI.length==0&&ValidaFase1">
+                                    <i class="fa fa-smile fa-5x"></i>
+                                    <h4>No existen Remisiones en espera de Fase 1</h4>
+                                </div>
+                                <table class="table table-hover ">
+                                    <tr *ngFor="let item of FaseI; let i = index" id="fila{{i}}">
+                                        <td style="width:50px;">
+                                            <div class="feed-user-img">
+                                                <img src="assets/images/user.jpg" style="width: 50px;" class="img-radius ">
+                                               <!--  <img *ngIf="item.Imagen !=''" src="{{globales.ruta}}IMAGENES/FUNCIONARIOS/{{item.Imagen}}" class="img-radius imagen" alt=""> -->
+                                            </div>
+                                        </td>
+                                        <td style="padding:8px !important;">
+                                            <h6>{{item.Tipo}} {{item.Codigo}}</h6>
+                                            <p class="text-muted"><strong>Origen: </strong> {{item.Nombre_Origen}}</p>
+                                            <p class="destino"><strong>Destino: </strong> {{item.Nombre_Destino}}</p>
+                                        </td>
+                                        <td style="width:30px;text-align:center;">
+                                            <i *ngIf="item.Tipo_Bodega=='MEDICAMENTOS'" class="fa fa-medkit fa-2x" style="color:green"></i>
+                                            <i *ngIf="item.Tipo_Bodega=='MATERIALES'" class="fa fa-th-large fa-2x" style="color:rgb(87, 87, 67)"></i>
+                                            <i *ngIf="item.Tipo_Bodega=='REFRIGERADOS'" class="fas fa-snowflake fa-2x" style="color:#2569e8"></i>
+                                        </td>
+                                        <td style="width:90px;">
+                                            <p class="text-muted "> Prioridad {{item.Prioridad}} </p>
+                                        </td>
+                                        <td style="width:75px;">
+                                            <button class="btn btn-warning  btn-sm " (click)="Bandera_Fase1(item.Id_Remision,item.Tipo)">Iniciar
+                          Fase I</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #confirmacionSwal title="" text="" type=""></swal>

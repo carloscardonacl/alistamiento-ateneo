@@ -1,0 +1,35 @@
+.pcoded {
+    .pcoded-navbar{
+        height: 59px !important;
+    }
+}
+.footer{
+    position: absolute !important;
+   
+    margin: 15px 0 !important;
+    padding: 0 40px;
+    .content-footer{
+        background: white;
+        color: black !important;
+        padding: 5px 15px;
+    }
+    span, a{
+        font-size: 11px !important;
+    }
+   
+}
+
+.badge{
+    padding: 3px 5px !important;
+    top: 10px !important;
+    right: 5px !important;
+    color: white !important;
+}
+
+.main-body{
+    margin: 0 !important;
+}
+.pcoded-wrapper, .pcoded-content , .pcoded-inner-content{
+    min-height: calc(100vh - 56px);
+}
+

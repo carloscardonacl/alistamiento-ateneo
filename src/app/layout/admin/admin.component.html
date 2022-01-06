@@ -1,0 +1,180 @@
+<div id="pcoded" class="pcoded"
+     [attr.nav-type]="navType"
+     [attr.theme-layout]="themeLayout"
+     [attr.horizontal-placement]="verticalPlacement" 
+     [attr.horizontal-layout]="verticalLayout"
+     [attr.pcoded-device-type]="pcodedDeviceType"
+     [attr.vertical-effect]="verticalEffect"
+     [attr.vnavigation-view]="vnavigationView"
+     [attr.fream-type]="freamType"
+     [attr.sidebar-img]="sidebarImg"
+     [attr.sidebar-img-type]="sidebarImgType"
+     [attr.layout-type]="layoutType"
+     (window:resize)="onResize($event)"
+  > <!-- [attr.vertical-nav-type]="verticalNavType" -->
+  <div class="pcoded-overlay-box"></div>
+  <div class="pcoded-container navbar-wrapper">
+    <nav class="navbar header-navbar pcoded-header" [attr.header-theme]="headerTheme" [attr.pcoded-header-position]="pcodedHeaderPosition">
+      <div class="navbar-wrapper">
+        <div class="navbar-logo">
+          <a class="mobile-menu" id="mobile-collapse" href="javascript:" (click)="toggleOpened()" [exclude]="'#main_navbar'" (clickOutside)="onClickedOutsideSidebar($event)">
+            <i class="ti-menu"></i>
+          </a>
+          <a [routerLink]="['/tablero']">
+            <img class="img-fluid"  src="assets/images/logo-dark.svg" alt="Logo" />
+          </a>
+          <a href="javascript:" class="mobile-options" (click)="toggleHeaderNavRight()">
+            <i class="ti-more"></i>
+          </a>
+        </div>
+        <div class="navbar-container container-fluid">
+          <ul class="nav-left">
+            <li>
+              <div class="sidebar_toggle"><a href="javascript:"><i class="ti-menu"></i></a></div>
+            </li>
+            <!--<li class="header-search">
+              <div id="main-search" class="main-search morphsearch-search">
+                <div class="input-group">
+                  <span class="input-group-prepend search-close" (click)="searchOff()"><i class="ti-close input-group-text"></i></span>
+                  <input class="form-control" [style.width]="searchWidthString">
+                  <span class="input-group-append search-btn" (click)="searchOn()"><i class="ti-search input-group-text"></i></span>
+                </div>
+              </div>
+            </li> -->
+            <li appToggleFullScreen>
+              <a href="javascript:">
+                <i class="ti-fullscreen"></i>
+              </a>
+            </li>
+            <li>
+               <!--  <a href="javascript:">
+                    <i class="fa fa-map-marker"></i> {{Nombre_Punto}}
+                  </a> -->
+            </li>
+          </ul>
+          <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">
+            <li (clickOutside)="notificationOutsideClick('live')" class="header-notification " [ngClass]="liveNotificationClass" (click)="toggleLiveNotification()">
+              <a href="javascript:"  >
+                <i class="ti-bell"></i>
+                <!--<span class="badge bg-c-pink"></span>-->
+                
+              </a><span *ngIf="Alertas!=0" class="badge bg-c-pink">{{Alertas}}</span>
+             
+            </li>
+            <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass" (click)="toggleProfileNotification()">
+             ´
+            
+              <a href="javascript:">
+                <img class="rounded-circle header-profile-user" [src]="userA.imagenUrl" alt="Header Avatar">
+                <!-- <span>{{user.Nombres}} {{user.Apellidos}}</span> -->
+                <i class="ti-angle-down"></i>
+              </a>
+              <ul [@notificationBottom]="profileNotification" class="show-notification profile-notification">
+               <!--  <li>
+                  <a href="javascript:" >
+                    <i class="ti-user"></i> Mi Perfil
+                  </a>
+                </li>
+                <li>
+                  <a (click)="modalPuntos.show()" >
+                    <i class="fa fa-map-marker"></i> Cambiar Punto
+                  </a>
+                </li> -->
+                <li>
+                  <a (click)="salir()" >
+                    <i class="ti-layout-sidebar-left"></i> Salir
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    <div class="pcoded-main-container" [style.margin-top]="headerFixedMargin">
+     
+      <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+          <div class="pcoded-inner-content">
+            <!-- Main-body start -->
+            <div class="main-body">
+              <div class="page-wrapper">
+                <router-outlet>
+                  <app-title></app-title>
+                  <app-breadcrumbs></app-breadcrumbs>
+                  <app-spinner></app-spinner>
+                </router-outlet>
+              </div>
+            </div> 
+                        
+          </div>
+          <!-- Footer START -->
+          <footer class="footer">
+              <div class="content-footer">
+                  <div class="footer-copyright">
+                      <span >Todos los Derechos Reservados © {{Fecha | date:'yyyy'}} | ATENEO.</span>
+                      <span class="go-right">
+                        Desarrollado por Innovating Solutions S.A.S. 
+                      </span>
+                  </div>
+              </div>
+          </footer>
+          <!-- Footer END -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-basic id="ModalCambiarContrasena" #ModalCambiarContrasena>        
+  <div class="app-modal-header">
+      <h4>Cambiar contraseña</h4>
+  </div>
+  <div class="app-modal-body">
+      <form #FormCambiarContrasena="ngForm">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label>Escriba una nueva contraseña</label>
+                      <input type="password" placeholder="" class="form-control" name="clave" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}" ngModel  title="Entre 6 y 12 Caracteres, 1 Letra Mayúscula, 1 Letra Minúscula" required>
+                      <br>
+                      <ul>
+                        <li>*Entre 6 y 12 Caracteres</li>
+                        <li>*Al menos una Letra Minúscula</li>
+                        <li>*Al menos una Letra Mayúscula</li>
+                      </ul>
+                  </div>
+              </div>              
+          </div>          
+      </form>
+  </div>
+  <div class="app-modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-primary btn-sm" [disabled]="!FormCambiarContrasena.valid" (click)="CambiarContrasena(FormCambiarContrasena)">Actualizar</button>
+    </div>
+</div>       
+</app-modal-basic>
+<app-modal-basic #modalPuntos>
+    <div class="app-modal-header">
+        <h4>Puntos de Dispensación Asignados</h4>
+    </div>
+    <div class="app-modal-body text-center">
+        <p>Por favor seleccione el Punto de Dispensación en el que se encuentre y vaya a trabajar en este momento</p>
+        <select class="form-control" #PuntoSeleccionado ngModel>
+            <option *ngFor="let punto of Puntos_Propios" value="{{punto.Id_Punto_Dispensacion}}">{{punto.Nombre_Punto}}</option>
+        </select>
+    </div>
+    <div class="app-modal-footer">
+        <div class="text-right">
+            <button type="button" class="btn btn-success btn-sm" (click)="GuardaPunto()">Guardar</button>
+        </div>
+    </div>
+</app-modal-basic>
+
+<swal #confirmSwal
+  title="Contraseña cambiada"
+  text= "Su contraseña a sido cambiada exitosamente, por favor inicie sesión nuevamente."
+  type="success"
+  >
+  </swal>
